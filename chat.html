@@ -1,0 +1,238 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const ldap = urlParams.get('ldap');
+        const ws = new WebSocket("ws://localhost/ws?ldap=" + ldap);
+
+        ws.onclose = () => {
+            console.log("Connection closed");
+        };
+
+        function sendMessage(message) {
+            const payload = { "name" : ldap, "msg" : message, "cmd" : "msg" };
+            ws.send(JSON.stringify(payload));
+        }
+    </script>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: rgb(250,250,250);
+        }
+        .chat {
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            height: 50px;
+            line-height: 50px;
+            flex-direction: row;
+            padding: 8px;
+            border: 1px solid rgb(150,150,150);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+        }
+        .chat-header .chat-header-title{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .chat-body {
+            height: 500px;
+            flex-direction: column-reverse;
+            display: flex;
+            border-left: 1px solid rgb(150,150,150);
+            border-right: 1px solid rgb(150,150,150);
+            overflow: auto;
+
+        }
+        .chat-body .message {
+            display: flex;
+            flex-direction: row;
+            padding: 5px;
+            padding-left: 15px;
+            font-size: 15px;
+            font-weight: 300;
+        }
+        .message .user-profile {
+            text-align: start;
+            width: 130px;
+        }
+        .message .user-message {
+            text-align: start;
+            width: 100%;
+        }
+        .chat-footer {
+            height: 30px;
+            display: flex;
+            flex-direction: row-reverse;
+            padding: 15px;
+            border: 1px solid rgb(150,150,150);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .chat-footer .message-send {
+            width: 80px;
+        }
+        .chat-footer .message-input {
+            width: 100%;
+            font-size: 20px;
+            background-color: rgb(250,250,250);
+            border: none;
+            border-bottom: 2px solid rgb(180,180,180);
+            transition: border-bottom 0.4s ease-in-out;
+
+        }
+
+        .chat-footer .message-input:focus {
+            outline: none;
+            border: none;
+            border-bottom: 2px solid rgb(40, 200, 20);
+        }
+    </style>
+</head>
+<body>
+    <div class="chat">
+        <div class="chat-header">
+            <div class="chat-header-title">
+                실시간 채팅
+            </div>
+
+        </div>
+        <div class="chat-body" id="chat">
+            <div class="message">
+                <div class="user-profile" style="color: blueviolet">
+                    harrison.kim
+                </div>
+                <div class="user-message">
+                    기대가 됩니다.
+                </div>
+            </div>
+            <div class="message">
+                <div class="user-profile" style="color: burlywood">
+                    dd.ee
+                </div>
+                <div class="user-message">
+                    화이팅
+                </div>
+            </div>
+            <div class="message">
+                <div class="user-profile">
+                    당근
+                </div>
+                <div class="user-message">
+                    이알어랃러ㅏ더라ㅓㅏㅓㅇ라ㅓ다ㅓ라더라더ㅏ러달
+                </div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <button class="message-send" onclick="send()">입력</button>
+            <input id="message" class="message-input">
+        </div>
+    </div>    
+
+    <script>
+        var profileColorList = [
+            '#84ad69',
+            '#ad6984',
+            '#6984ad',
+            '#7593c1',
+            '#16c2f7',
+            '#ccff66',
+            '#a2a2d0',
+            '#6495ed',
+            '#ff8d11',
+            '#c66e00',
+            '#1f0954',
+            '#000037',
+            '#4a0000',
+            '#123524',
+            '#ff7276',
+            '#ffb91d',
+            '#8f99fb',
+            '#210eeb',
+            '#2a3439',
+            '#c41e3a',
+            '#8eacf3'
+        ]
+
+        var messageList = [];
+        var chatElement = document.getElementById('chat');
+        var messageElement = document.getElementById('message');
+
+        function simpleHash(str) {
+            let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    hash = (hash << 5) + str.charCodeAt(i);
+                    hash = hash & hash; // Convert to 32bit integer
+                    hash = Math.abs(hash); // Ensure positive value
+                }
+            hash = hash ^ str.length;
+            console.log(hash % 20);
+            return hash % 20; // Ensure the result is between 0 and 19
+        }
+
+        function getMessageColor(profile) {
+            return profileColorList[simpleHash(profile)]
+        }
+
+        function updateMessageList() {
+            var html = '';
+            for (message of messageList.toReversed()) {
+                html += `<div class="message">
+                            <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
+                                ${message.profile}
+                            </div>
+                            <div class="user-message">
+                                ${message.message}
+                            </div>
+                        </div>`
+            } 
+            chatElement.innerHTML = html;
+        }
+
+        function createNewMessage(profile, message) {
+            messageList.push({
+                profile: profile,
+                message: message
+            })
+            updateMessageList()
+        }
+
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            if (message.cmd == 'msg') {
+                createNewMessage(message.name, message.msg);
+            } else if (message.cmd == 'list') {
+                message.cmdList.forEach(cmd => {
+                    const msgCmd = JSON.parse(cmd);
+                    createNewMessage(msgCmd.name, msgCmd.msg);
+                });
+            }
+        };
+
+        function send() {
+            var message = messageElement.value;
+            if (message !== '') {
+                sendMessage(message);
+                messageElement.value = '';
+            }
+        }
+
+        messageElement.onkeydown = function keydown(e) {
+            if(e.keyCode == 13) {
+                send()
+            }
+        }
+        document.onload = updateMessageList();
+        
+    </script>
+</body>
+</html>
