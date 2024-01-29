@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <canvas id="maincanvas"></canvas>
+            <span class="logout">logout</span>
+            <span class="player">user nickname</span>
+        </div>
+        <div class="content">
+            <h1>PLAYERS</h1>
+            <img id="playersImg" src="images/p-0.png">
+            <span class="arrow-prev" ></span>
+            <span class="arrow-next"></span>
+        </div>
+        <div class="content">            
+            <h1>BETTING</h1>
+            <div class = "box">
+                <div class="betting-row">
+                    <span class="betting">RED TEAM WIN</span>
+                    <span class="betting betting-right">BLUE TEAM WIN</span>
+                </div>
+                <div class="betting-row">
+                    <span class="betting">RED TEAM WIN</span>
+                    <span class="betting betting-right">BLUE TEAM WIN</span>
+                </div>
+                <h2>ABDEFASD</h2>
+                <div class="betting-row">
+                    <span class="betting-line">
+                        <span class="betting-line-line line-red line-top line-selected-red"></span>
+                        <span class="betting-line-line line-red line-jug"></span>
+                        <span class="betting-line-line line-red line-mid"></span>
+                        <span class="betting-line-line line-red line-adc"></span>
+                        <span class="betting-line-line line-red line-sup"></span>
+                    </span>
+                    <span class="betting-line betting-right">
+                        <span class="betting-line-line line-blue line-top"></span>
+                        <span class="betting-line-line line-blue line-jug"></span>
+                        <span class="betting-line-line line-blue line-mid line-selected-blud"></span>
+                        <span class="betting-line-line line-blue line-adc"></span>
+                        <span class="betting-line-line line-blue line-sup"></span>
+                    </span>
+                </div>
+                <h2>ABDEFASD</h2>
+                <div class="betting-row">
+                    <span class="betting-line">
+                        <span class="betting-line-line line-red line-top line-selected-red"></span>
+                        <span class="betting-line-line line-red line-jug"></span>
+                        <span class="betting-line-line line-red line-mid"></span>
+                        <span class="betting-line-line line-red line-adc"></span>
+                        <span class="betting-line-line line-red line-sup"></span>
+                    </span>
+                    <span class="betting-line betting-right">
+                        <span class="betting-line-line line-blue line-top"></span>
+                        <span class="betting-line-line line-blue line-jug"></span>
+                        <span class="betting-line-line line-blue line-mid line-selected-blud"></span>
+                        <span class="betting-line-line line-blue line-adc"></span>
+                        <span class="betting-line-line line-blue line-sup"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h1>WATCH PARTY</h1>
+            <div class = "box2">
+                <div class="view-area">
+
+                </div>
+                <div class="chat-area">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="scripts/index.js"></script>
+<script type="module" src="scripts/main.js"></script>
+</html>

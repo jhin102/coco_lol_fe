@@ -1,0 +1,227 @@
+* {
+    user-select: none;
+    -ms-user-select: none;
+    outline: 0;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body { margin: 0;}
+        
+.container {
+    /* transition: all 0.5s; */
+    font-family: 'Rubik Mono One', monospace;
+    width: 100%; height: 100%;
+}
+
+p {
+    margin:0
+}
+
+canvas {
+    height: 100vh;
+    width: 100%;
+    background-color: #c5beaf;
+}
+
+html{overflow: hidden;}
+ 
+html, body{width: 100%; height: 100%;}
+ 
+.content{
+	width: 100%; height: 100%;
+	background-color: #0f1519;
+	
+	position: relative;
+}
+.content > h1{
+	position: absolute;
+	top: 10%; left: 50%;
+	transform: translate(-50%,-50%);
+    font-family: 'Rubik Mono One', monospace;
+	font-size: 3em;
+    color: white;
+}
+.content > img{
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%,-50%);
+}
+/* .content:nth-child(even){background-color: #333;} */
+
+.arrow-prev,
+.arrow-next {
+    position: relative;
+    float:left;
+	top: 50%; left: 50%;
+    width:100px;
+    height:100px;
+    margin-right:5px;
+    cursor: pointer;
+}
+
+.arrow-prev::after {
+    position: absolute;
+    left: -550px; 
+    content: '';
+    width: 50px; /* 사이즈 */
+    height: 50px; /* 사이즈 */
+    border-top: 8px solid #fff; /* 선 두께 */
+    border-right: 8px solid #fff; /* 선 두께 */
+    transform: rotate(225deg); /* 각도 */
+}
+
+.arrow-next::after {
+    position: absolute;
+    left: 390px; 
+    content: '';
+    width: 50px; /* 사이즈 */
+    height: 50px; /* 사이즈 */
+    border-top: 8px solid #fff; /* 선 두께 */
+    border-right: 8px solid #fff; /* 선 두께 */
+    transform: rotate(45deg); /* 각도 */
+}
+
+.betting {
+    display:inline-block;
+    width: 480px;
+    height: 100px;
+    background-color: #283337;
+    cursor: pointer;
+
+    text-align: center;
+    line-height: 100px;
+    font-size: 2em;
+    color: #fff;
+}
+
+.betting-line {
+    display:inline-block;
+    width: 470px;
+    height: 100px;
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+.betting-line-line {
+    display:inline-block;
+    width: 82px;
+    height: 82px;
+    cursor: pointer;
+}
+
+.line-blue {
+    background-color: #206077 !important;
+}
+
+.line-red {
+    background-color: #772020 !important;
+}
+
+.line-selected-red {
+    background-color: #bd5a5a !important;
+}
+
+.line-selected-blud {
+    background-color: #71c3e0 !important;
+}
+
+.line-top {
+    background: url(./images/line/top.png);
+    background-size: 82px;
+}
+
+.line-jug {
+    background: url(./images/line/jug.png);
+    background-size: 82px;
+}
+
+.line-mid {
+    background: url(./images/line/mid.png);
+    background-size: 82px;
+}
+
+.line-adc {
+    background: url(./images/line/adc.webp);
+    background-size: 82px;
+}
+
+.line-sup {
+    background: url(./images/line/sup.png);
+    background-size: 82px;
+}
+
+
+
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    color: #fff;
+}
+
+.betting-right {
+    float: right;
+}
+
+.box {
+    width:1000px;
+    height: 100vh;
+    margin: 0 auto;
+    padding-top: 200px;
+}
+
+.box2 {
+    width:1200px;
+    height: 100vh;
+    margin: 0 auto;
+    display:flex;
+}
+
+.betting-row {
+    width:100%;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.chat-area {
+    width: 300px;
+    height: 100%;
+    background-color: #283337;
+}
+
+.view-area {
+    width: 900px;
+    height: 100%;
+    background-color: #424242;
+}
+
+.logout {
+    width: 100px;
+    height: 50px;
+    background-color: #42424233;
+    top: 50px;
+    right: 50px;
+    position: absolute;
+    z-index: 9999;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.player {
+    width: 200px;
+    height: 50px;
+    background-color: #42424200;
+    top: 50px;
+    right: 150px;
+    position: absolute;
+    z-index: 9999;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+}
