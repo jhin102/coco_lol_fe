@@ -9,7 +9,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const ldap = urlParams.get('ldap');
-        const ws = new WebSocket("ws://localhost/ws?ldap=" + ldap);
+        const ws = new WebSocket("ws://34.22.68.104/ws?ldap=" + ldap);
 
         ws.onclose = () => {
             console.log("Connection closed");
