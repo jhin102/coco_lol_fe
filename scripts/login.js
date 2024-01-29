@@ -91,7 +91,9 @@ if (!document.location.href.includes('login.html')) {
     checkLogin();
 
     player = document.getElementById('player');
-    player.innerHTML = `${getCookie('coco_ldap') - getCookie('coco_nickname')}`
+    ldap = getCookie('coco_ldap');
+    nickname = getCookie('nickname')
+    player.innerHTML = `${nickname}(${ldap})`
 }
 
 function logout() {
