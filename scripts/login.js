@@ -24,7 +24,7 @@ function getCookie(cname) {
 function checkLogin() {
     ldap = getCookie('coco_ldap');
     if (ldap === '') {
-        //document.location.href = "./login.html"
+        document.location.href = "./login.html"
     }
 }
 
