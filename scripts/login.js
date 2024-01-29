@@ -24,11 +24,77 @@ function getCookie(cname) {
 function checkLogin() {
     ldap = getCookie('coco_ldap');
     if (ldap === '') {
-        needLogin();
+        document.location.href = "./login.html"
     }
 }
 
-function needLogin() {
-    ldap = prompt("로그인이 필요합니다. LDAP을 입력해주세요. (꼭 본인 LDAP으로만 로그인 해주세요)");
-    
+async function login() {
+    ldap = document.getElementById('ldap').value;
+    if (ldap !== '') {
+        response = await fetch("http://34.22.68.104/api/login?ldap=" + ldap);
+        if (response.status === 200) {
+            data = await response.json();
+            console.log(data);
+            if (data.login === 'true') {
+                setCookie('coco_ldap', data.ldap, 10);
+                setCookie('coco_nickname', data.nickname, 10);
+                alert('로그인 성공');
+                document.location.href = "./index.html"
+            }
+            else {
+                alert("가입이 필요합니다.")
+                show_register();
+            }
+        }
+    }
+    else {
+        alert('LDAP을 입력해주세요.')
+    }
+}
+
+function show_register() {
+    console.log('need register');
+    document.getElementById('nickname').style.display = 'block';
+    document.getElementById('register').style.display = 'block';
+}
+
+async function register() {
+    ldap = document.getElementById('ldap').value;
+    nickname = document.getElementById('nickname').value;
+
+    if (ldap !== '' && nickname !== '') {
+        response = await fetch("http://34.22.68.104/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            body: JSON.stringify({
+                ldap: ldap,
+                nickname: nickname
+            })
+        })
+
+        data = await response.json();
+        if (data.result === 'success') {
+            setCookie('coco_ldap', ldap, 10);
+            setCookie('coco_nickname', nickname, 10);
+            alert('가입에 성공했습니다.');
+            document.location.href = "./index.html"
+        }
+    }
+    else {
+        alert('LDAP과 닉네임을 입력해주세요.')
+    }
+}
+
+if (!document.location.href.includes('login.html')) {
+    checkLogin();
+
+    player = document.getElementById('player');
+    player.innerHTML = `${getCookie('coco_ldap') - getCookie('coco_nickname')}`
+}
+
+function logout() {
+    setCookie('coco_ldap', '1', 0);
+    document.location.reload();
 }
