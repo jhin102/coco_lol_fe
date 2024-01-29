@@ -54,7 +54,7 @@ async function login() {
 
 function show_register() {
     console.log('need register');
-    document.getElementById('nickname').style.display = 'block';
+    document.getElementById('nickname_area').style.display = 'block';
     document.getElementById('register').style.display = 'block';
 }
 
@@ -92,11 +92,30 @@ if (!document.location.href.includes('login.html')) {
 
     player = document.getElementById('player');
     ldap = getCookie('coco_ldap');
-    nickname = getCookie('nickname')
+    nickname = getCookie('coco_nickname')
     player.innerHTML = `${nickname}(${ldap})`
 }
 
 function logout() {
     setCookie('coco_ldap', '1', 0);
     document.location.reload();
+}
+
+function checkButton(type) {
+    if (type === 'ldap') {
+        if (document.getElementById('ldap').value !== '') {
+            document.getElementById('login_img').src = "./images/login_button_on.PNG";
+        }
+        else {
+            document.getElementById('login_img').src = "./images/login_button_off.PNG";
+        }
+    }
+    else if (type === 'nickname') {
+        if (document.getElementById('nickname').value !== '') {
+            document.getElementById('register_img').src = "./images/login_button_on.PNG";
+        }
+        else {
+            document.getElementById('register_img').src = "./images/login_button_off.PNG";
+        }
+    }
 }
