@@ -71,7 +71,7 @@ class App {
         this.ctx.textAlign = "left";
         this.ctx.fillText('2024 COCO', 50, 100);
         this.ctx.fillText('LEAGUE OF LEGEND', 50, 200);
-        this.ctx.fillText('REGULAR FRIENDLY MATCH', 50, 300);
+        this.ctx.fillText('FRIENDLY MATCH', 50, 300);
         this.ctx.fillText('MATCH 2. IRENE CUP', 50, 400);
     }
 }
