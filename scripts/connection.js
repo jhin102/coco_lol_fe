@@ -54,10 +54,13 @@ window.connection_init = () => {
                 loadQuizData(cmd.quiznumber, cmd.answer)
                 break;
             case 'list':
-                console.log(cmd);
-                cmd.cmdList.forEach(cmd => {
-                    chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
-                });
+                if (cmd.cmdList.length > 0) {
+                    setTimeout(() => {
+                        cmd.cmdList.forEach(cmd => {
+                            chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
+                        });
+                    }, 200)
+                }
                 break;
         }
     }
