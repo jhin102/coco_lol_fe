@@ -119,7 +119,7 @@
             </div>
         </div>
         <div class="chat-footer">
-            <button class="message-send" onclick="send()">입력</button>
+            <button id="message_button" class="message-send">입력</button>
             <input id="message" class="message-input">
         </div>
     </div>    
@@ -225,6 +225,11 @@
                     send()
                 }
             }
+
+            document.getElementById('message_button').onclick = function(e) {
+                send();
+            }
+
             document.onload = updateMessageList();
         }
     </script>
