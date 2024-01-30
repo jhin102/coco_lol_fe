@@ -57,7 +57,7 @@ window.connection_init = () => {
                 if (cmd.cmdList.length > 0) {
                     setTimeout(() => {
                         cmd.cmdList.forEach(cmd => {
-                            chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
+                            commandProcessor(cmd);
                         });
                     }, 200)
                 }
