@@ -8,6 +8,8 @@ const COLORS = [
     {r: 54, g: 233, b: 84},
 ];
 
+let lastFrameTime = 0;
+
 class App {
     constructor() {
         this.canvas = document.getElementById('maincanvas');
@@ -59,6 +61,15 @@ class App {
     }
 
     animate(t) {
+        const FRAMES_PER_SECOND = 30;
+        const FRAME_MIN_TIME = (1000/60) * (60 / FRAMES_PER_SECOND) - (1000/60) * 0.5;
+
+        if(t-lastFrameTime < FRAME_MIN_TIME){
+            window.requestAnimationFrame(this.animate.bind(this));
+            return;
+        }
+        lastFrameTime = t;
+
         window.requestAnimationFrame(this.animate.bind(this));
         this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 
