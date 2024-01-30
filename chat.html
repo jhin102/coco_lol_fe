@@ -126,6 +126,8 @@
 
     <script>
         window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const ldap = urlParams.get('ldap');
             const ws = parent.ws;
         
             var profileColorList = [
