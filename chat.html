@@ -6,20 +6,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const ldap = urlParams.get('ldap');
-        const ws = new WebSocket("ws://34.22.68.104/ws?ldap=" + ldap);
-
-        ws.onclose = () => {
-            console.log("Connection closed");
-        };
-
-        function sendMessage(message) {
-            const payload = { "name" : ldap, "msg" : message, "cmd" : "msg" };
-            ws.send(JSON.stringify(payload));
-        }
-    </script>
     <style>
         body {
             text-align: center;
@@ -139,100 +125,108 @@
     </div>    
 
     <script>
-        var profileColorList = [
-            '#84ad69',
-            '#ad6984',
-            '#6984ad',
-            '#7593c1',
-            '#16c2f7',
-            '#ccff66',
-            '#a2a2d0',
-            '#6495ed',
-            '#ff8d11',
-            '#c66e00',
-            '#1f0954',
-            '#000037',
-            '#4a0000',
-            '#123524',
-            '#ff7276',
-            '#ffb91d',
-            '#8f99fb',
-            '#210eeb',
-            '#2a3439',
-            '#c41e3a',
-            '#8eacf3'
-        ]
-
-        var messageList = [];
-        var chatElement = document.getElementById('chat');
-        var messageElement = document.getElementById('message');
-
-        function simpleHash(str) {
-            let hash = 0;
-                for (let i = 0; i < str.length; i++) {
-                    hash = (hash << 5) + str.charCodeAt(i);
-                    hash = hash & hash; // Convert to 32bit integer
-                    hash = Math.abs(hash); // Ensure positive value
-                }
-            hash = hash ^ str.length;
-            console.log(hash % 20);
-            return hash % 20; // Ensure the result is between 0 and 19
-        }
-
-        function getMessageColor(profile) {
-            return profileColorList[simpleHash(profile)]
-        }
-
-        function updateMessageList() {
-            var html = '';
-            for (message of messageList.toReversed()) {
-                html += `<div class="message">
-                            <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
-                                ${message.profile}
-                            </div>
-                            <div class="user-message">
-                                ${message.message}
-                            </div>
-                        </div>`
-            } 
-            chatElement.innerHTML = html;
-        }
-
-        function createNewMessage(profile, message) {
-            messageList.push({
-                profile: profile,
-                message: message
-            })
-            updateMessageList()
-        }
-
-        ws.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            if (message.cmd == 'msg') {
-                createNewMessage(message.name, message.msg);
-            } else if (message.cmd == 'list') {
-                message.cmdList.forEach(cmd => {
-                    const msgCmd = JSON.parse(cmd);
-                    createNewMessage(msgCmd.name, msgCmd.msg);
-                });
-            }
-        };
-
-        function send() {
-            var message = messageElement.value;
-            if (message !== '') {
-                sendMessage(message);
-                messageElement.value = '';
-            }
-        }
-
-        messageElement.onkeydown = function keydown(e) {
-            if(e.keyCode == 13) {
-                send()
-            }
-        }
-        document.onload = updateMessageList();
+        window.onload = () => {
+            const ws = parent.ws;
         
+            var profileColorList = [
+                '#84ad69',
+                '#ad6984',
+                '#6984ad',
+                '#7593c1',
+                '#16c2f7',
+                '#ccff66',
+                '#a2a2d0',
+                '#6495ed',
+                '#ff8d11',
+                '#c66e00',
+                '#1f0954',
+                '#000037',
+                '#4a0000',
+                '#123524',
+                '#ff7276',
+                '#ffb91d',
+                '#8f99fb',
+                '#210eeb',
+                '#2a3439',
+                '#c41e3a',
+                '#8eacf3'
+            ]
+
+            var messageList = [];
+            var chatElement = document.getElementById('chat');
+            var messageElement = document.getElementById('message');
+
+            function sendMessage(message) {
+                const payload = { "name" : ldap, "msg" : message, "cmd" : "msg" };
+                ws.send(JSON.stringify(payload));
+            }
+
+            function simpleHash(str) {
+                let hash = 0;
+                    for (let i = 0; i < str.length; i++) {
+                        hash = (hash << 5) + str.charCodeAt(i);
+                        hash = hash & hash; // Convert to 32bit integer
+                        hash = Math.abs(hash); // Ensure positive value
+                    }
+                hash = hash ^ str.length;
+                console.log(hash % 20);
+                return hash % 20; // Ensure the result is between 0 and 19
+            }
+
+            function getMessageColor(profile) {
+                return profileColorList[simpleHash(profile)]
+            }
+
+            function updateMessageList() {
+                var html = '';
+                for (message of messageList.toReversed()) {
+                    html += `<div class="message">
+                                <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
+                                    ${message.profile}
+                                </div>
+                                <div class="user-message">
+                                    ${message.message}
+                                </div>
+                            </div>`
+                } 
+                chatElement.innerHTML = html;
+            }
+
+            function createNewMessage(profile, message) {
+                messageList.push({
+                    profile: profile,
+                    message: message
+                })
+                updateMessageList()
+            }
+
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                if (message.cmd == 'msg') {
+                    createNewMessage(message.name, message.msg);
+                } else if (message.cmd == 'list') {
+                    message.cmdList.forEach(cmd => {
+                        const msgCmd = JSON.parse(cmd);
+                        createNewMessage(msgCmd.name, msgCmd.msg);
+                    });
+                }
+            };
+
+            function send() {
+                var message = messageElement.value;
+                if (message !== '') {
+                    sendMessage(message);
+                    messageElement.value = '';
+                }
+            }
+
+            messageElement.onkeydown = function keydown(e) {
+                if(e.keyCode == 13) {
+                    send()
+                }
+            }
+            document.onload = updateMessageList();
+        }
     </script>
 </body>
 </html>
