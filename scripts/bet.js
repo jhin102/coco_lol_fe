@@ -32,7 +32,7 @@ function resetBettingClass(index, type) {
 
 $('.bet-item').on({
     click: function(event) {
-        if (new Date() > new Date('2024-01-30 13:00:00')) {
+        if (new Date() > new Date('2024-01-31 13:00:00')) {
             alert('배팅 가능한 기간이 아닙니다.')
             return
         }
