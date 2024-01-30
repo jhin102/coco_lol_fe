@@ -204,7 +204,6 @@
         }
 
         function simpleHash(str) {
-            console.log(str);
             let hash = 0;
                 for (let i = 0; i < str.length; i++) {
                     hash = (hash << 5) + str.charCodeAt(i);
@@ -212,7 +211,6 @@
                     hash = Math.abs(hash); // Ensure positive value
                 }
             hash = hash ^ str.length;
-            console.log(hash % 20);
             return hash % 20; // Ensure the result is between 0 and 19
         }
 
