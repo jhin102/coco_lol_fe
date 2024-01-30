@@ -46,7 +46,7 @@ function loadQuizData(index, value) {
 function commandProcessor(cmd) {
     switch (cmd.cmd) {
         case 'msg':
-            chatFrame.childNodes[0].contentWindow.createNewMessage(cmd.name, cmd.msg);
+            chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
             break;
         case 'answer':
             console.log("load data : ", cmd.quiznumber, cmd.answer)
@@ -54,7 +54,7 @@ function commandProcessor(cmd) {
             break;
         case 'list':
             cmd.cmdList.forEach(cmd => {
-                chatFrame.childNodes[0].contentWindow.createNewMessage(cmd.name, cmd.msg);
+                chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
             });
             break;
     }
