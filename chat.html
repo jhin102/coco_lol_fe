@@ -182,7 +182,7 @@
         var chatElement = document.getElementById('chat');
         var messageElement = document.getElementById('message');
 
-        function sendMessage(message) {
+        function chatSend(message) {
             parent.sendMessage(message);
         }
 
@@ -205,7 +205,7 @@
         function send() {
             var message = messageElement.value;
             if (message !== '') {
-                sendMessage(message);
+                chatSend(message);
                 messageElement.value = '';
             }
         }
