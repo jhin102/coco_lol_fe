@@ -149,11 +149,23 @@
     <script>
         var messageList = [];
 
+        var verfiedLdapList = [
+            'harrison.kim'
+        ];
+
+        function verifyUser(ldap) {
+            if (ldap in verfiedLdapList) {
+                return `💎`;
+            }
+            return '';
+        }
+
         function updateMessageList() {
             var html = '';
             for (message of messageList.toReversed()) {
                 html += `<div class="message">
                             <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
+                                ${verifyUser(message.profile)}
                                 ${message.profile}
                             </div>
                             <div class="user-message">
