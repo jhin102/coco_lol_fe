@@ -32,8 +32,10 @@ function resetBettingClass(index, type) {
 
 $('.bet-item').on({
     click: function(event) {
-        if (bettingFinished)
+        if (new Date() > new Date('2024-01-30 13:00:00')) {
+            alert('배팅 가능한 기간이 아닙니다.')
             return
+        }
 
         const item = $(event.target).data('item-id').split('-').map((x) => Number(x))
         const index = item[0]
