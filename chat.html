@@ -130,10 +130,9 @@
     </div>    
 
     <script>
+        var messageList = [];
+
         window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const ldap = urlParams.get('ldap');
-            const ws = parent.ws;
         
             var profileColorList = [
                 '#84ad69',
@@ -159,13 +158,11 @@
                 '#8eacf3'
             ]
 
-            var messageList = [];
             var chatElement = document.getElementById('chat');
             var messageElement = document.getElementById('message');
 
             function sendMessage(message) {
-                const payload = { "name" : ldap, "msg" : message, "cmd" : "msg" };
-                ws.send(JSON.stringify(payload));
+                parent.sendMessage(message);
             }
 
             function simpleHash(str) {
@@ -206,18 +203,6 @@
                 })
                 updateMessageList()
             }
-
-            ws.onmessage = (event) => {
-                const message = JSON.parse(event.data);
-                if (message.cmd == 'msg') {
-                    createNewMessage(message.name, message.msg);
-                } else if (message.cmd == 'list') {
-                    message.cmdList.forEach(cmd => {
-                        const msgCmd = JSON.parse(cmd);
-                        createNewMessage(msgCmd.name, msgCmd.msg);
-                    });
-                }
-            };
 
             function send() {
                 var message = messageElement.value;

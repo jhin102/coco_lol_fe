@@ -1,8 +1,8 @@
-const urlParams = new URLSearchParams(window.location.search);
-// const ldap = urlParams.get('ldap');
-let ldap = "jhin.lee"
+let ldap = getCookie("coco_ldap");
 const ws = new WebSocket("wss://evolution-irene-cup.mooo.com/ws?ldap=" + ldap);
 window.ws = ws;
+
+let chatFrame = document.getElementById('chat');
 
 ws.onmessage = (event) => {
     const message = JSON.parse(event.data);
@@ -17,10 +17,8 @@ ws.onclose = () => {
     console.log("Connection closed");
 };
 
-function sendMessage() {
-    const username = document.getElementById("name").value;
-    const message = document.getElementById("msg").value;
-    const payload = { "name" : username, "msg" : message, "cmd" : "msg" };
+function sendMessage(message) {
+    const payload = { "name" : ldap, "msg" : message, "cmd" : "msg" };
     ws.send(JSON.stringify(payload));
 }
 
@@ -48,6 +46,7 @@ function loadQuizData(index, value) {
 function commandProcessor(cmd) {
     switch (cmd.cmd) {
         case 'msg':
+            chatFrame.createNewMessage(cmd.name, cmd.msg);
             break;
         case 'answer':
             console.log("load data : ", cmd.quiznumber, cmd.answer)
@@ -55,7 +54,7 @@ function commandProcessor(cmd) {
             break;
         case 'list':
             cmd.cmdList.forEach(cmd => {
-                commandProcessor(JSON.parse(cmd))
+                chatFrame.createNewMessage(cmd.name, cmd.msg);
             });
             break;
     }
