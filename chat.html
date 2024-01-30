@@ -211,7 +211,6 @@
                     hash = Math.abs(hash); // Ensure positive value
                 }
             hash = hash ^ str.length;
-            console.log(hash % 20);
             return hash % 20; // Ensure the result is between 0 and 19
         }
 
