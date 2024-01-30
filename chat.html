@@ -154,7 +154,7 @@
         ];
 
         function verifyUser(ldap) {
-            if (ldap in verfiedLdapList) {
+            if (verfiedLdapList.includes(ldap)) {
                 return `💎`;
             }
             return '';
