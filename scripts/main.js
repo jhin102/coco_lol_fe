@@ -80,4 +80,5 @@ window.onload = () => {
     new App();
 
     document.getElementById('chat').src = "./chat.html?ldap=" + getCookie('coco_ldap');
+    window.connection_init();
 };

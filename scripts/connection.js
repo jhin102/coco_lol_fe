@@ -1,4 +1,4 @@
-window.onload = () => {
+window.connection_init = () => {
     let ldap = getCookie("coco_ldap");
     const ws = new WebSocket("wss://evolution-irene-cup.mooo.com/ws?ldap=" + ldap);
     window.ws = ws;
