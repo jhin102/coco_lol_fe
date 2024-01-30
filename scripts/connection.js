@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 // const ldap = urlParams.get('ldap');
 let ldap = "jhin.lee"
-const ws = new WebSocket("ws://evolution-irene-cup.mooo.com/ws?ldap=" + ldap);
+const ws = new WebSocket("wss://evolution-irene-cup.mooo.com/ws?ldap=" + ldap);
 window.ws = ws;
 
 ws.onmessage = (event) => {
