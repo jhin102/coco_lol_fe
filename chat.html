@@ -132,98 +132,96 @@
     <script>
         var messageList = [];
 
-        window.onload = () => {
-        
-            var profileColorList = [
-                '#84ad69',
-                '#ad6984',
-                '#6984ad',
-                '#7593c1',
-                '#16c2f7',
-                '#ccff66',
-                '#a2a2d0',
-                '#6495ed',
-                '#ff8d11',
-                '#c66e00',
-                '#1f0954',
-                '#000037',
-                '#4a0000',
-                '#123524',
-                '#ff7276',
-                '#ffb91d',
-                '#8f99fb',
-                '#210eeb',
-                '#2a3439',
-                '#c41e3a',
-                '#8eacf3'
-            ]
-
-            var chatElement = document.getElementById('chat');
-            var messageElement = document.getElementById('message');
-
-            function sendMessage(message) {
-                parent.sendMessage(message);
-            }
-
-            function simpleHash(str) {
-                let hash = 0;
-                    for (let i = 0; i < str.length; i++) {
-                        hash = (hash << 5) + str.charCodeAt(i);
-                        hash = hash & hash; // Convert to 32bit integer
-                        hash = Math.abs(hash); // Ensure positive value
-                    }
-                hash = hash ^ str.length;
-                console.log(hash % 20);
-                return hash % 20; // Ensure the result is between 0 and 19
-            }
-
-            function getMessageColor(profile) {
-                return profileColorList[simpleHash(profile)]
-            }
-
-            function updateMessageList() {
-                var html = '';
-                for (message of messageList.toReversed()) {
-                    html += `<div class="message">
-                                <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
-                                    ${message.profile}
-                                </div>
-                                <div class="user-message">
-                                    ${message.message}
-                                </div>
-                            </div>`
-                } 
-                chatElement.innerHTML = html;
-            }
-
-            function createNewMessage(profile, message) {
-                messageList.push({
-                    profile: profile,
-                    message: message
-                })
-                updateMessageList()
-            }
-
-            function send() {
-                var message = messageElement.value;
-                if (message !== '') {
-                    sendMessage(message);
-                    messageElement.value = '';
-                }
-            }
-
-            messageElement.onkeydown = function keydown(e) {
-                if(e.keyCode == 13) {
-                    send()
-                }
-            }
-
-            document.getElementById('message_button').onclick = function(e) {
-                send();
-            }
-
-            document.onload = updateMessageList();
+        function updateMessageList() {
+            var html = '';
+            for (message of messageList.toReversed()) {
+                html += `<div class="message">
+                            <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
+                                ${message.profile}
+                            </div>
+                            <div class="user-message">
+                                ${message.message}
+                            </div>
+                        </div>`
+            } 
+            chatElement.innerHTML = html;
         }
+
+        function createNewMessage(profile, message) {
+            messageList.push({
+                profile: profile,
+                message: message
+            })
+            updateMessageList()
+        }
+        
+        var profileColorList = [
+            '#84ad69',
+            '#ad6984',
+            '#6984ad',
+            '#7593c1',
+            '#16c2f7',
+            '#ccff66',
+            '#a2a2d0',
+            '#6495ed',
+            '#ff8d11',
+            '#c66e00',
+            '#1f0954',
+            '#000037',
+            '#4a0000',
+            '#123524',
+            '#ff7276',
+            '#ffb91d',
+            '#8f99fb',
+            '#210eeb',
+            '#2a3439',
+            '#c41e3a',
+            '#8eacf3'
+        ]
+
+        var chatElement = document.getElementById('chat');
+        var messageElement = document.getElementById('message');
+
+        function sendMessage(message) {
+            parent.sendMessage(message);
+        }
+
+        function simpleHash(str) {
+            let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    hash = (hash << 5) + str.charCodeAt(i);
+                    hash = hash & hash; // Convert to 32bit integer
+                    hash = Math.abs(hash); // Ensure positive value
+                }
+            hash = hash ^ str.length;
+            console.log(hash % 20);
+            return hash % 20; // Ensure the result is between 0 and 19
+        }
+
+        function getMessageColor(profile) {
+            return profileColorList[simpleHash(profile)]
+        }
+
+        function send() {
+            var message = messageElement.value;
+            if (message !== '') {
+                sendMessage(message);
+                messageElement.value = '';
+            }
+        }
+
+        messageElement.onkeydown = function keydown(e) {
+            if(e.keyCode == 13) {
+                send()
+            }
+        }
+
+        document.getElementById('message_button').onclick = function(e) {
+            send();
+        }
+
+        document.onload = updateMessageList();
+        
     </script>
 </body>
 </html>
