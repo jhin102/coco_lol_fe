@@ -18,7 +18,7 @@ window.onload = () => {
         console.log("Connection closed");
     };
 
-    function sendMessage(message) {
+    window.sendChatMessage = (message) => {
         const payload = { "name" : ldap, "msg" : message, "cmd" : "msg" };
         ws.send(JSON.stringify(payload));
     }
@@ -54,6 +54,7 @@ window.onload = () => {
                 loadQuizData(cmd.quiznumber, cmd.answer)
                 break;
             case 'list':
+                console.log(cmd);
                 cmd.cmdList.forEach(cmd => {
                     chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
                 });
