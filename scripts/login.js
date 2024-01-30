@@ -31,7 +31,7 @@ function checkLogin() {
 async function login() {
     ldap = document.getElementById('ldap').value;
     if (ldap !== '') {
-        response = await fetch("/api/login?ldap=" + ldap);
+        response = await fetch("https://evolution-irene-cup.mooo.com/api/login?ldap=" + ldap);
         if (response.status === 200) {
             data = await response.json();
             console.log(data);
@@ -63,7 +63,7 @@ async function register() {
     nickname = document.getElementById('nickname').value;
 
     if (ldap !== '' && nickname !== '') {
-        response = await fetch("/api/register", {
+        response = await fetch("https://evolution-irene-cup.mooo.com/api/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=UTF-8"

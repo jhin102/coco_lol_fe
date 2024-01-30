@@ -6,6 +6,7 @@
 // 이지선다, 1: 레드팀, 2: 블루팀
 // 십지선다, 레드팀 탑 ~ 서폿 : 1~5, 블루팀 탑 ~ 서폿 6 ~ 10
 
+let bettingFinished = false
 
 let bettingList = [0, 0, 0, 0, 0]
 let bettingType = [0, 0, 0, 1, 1]
@@ -31,6 +32,9 @@ function resetBettingClass(index, type) {
 
 $('.bet-item').on({
     click: function(event) {
+        if (bettingFinished)
+            return
+
         const item = $(event.target).data('item-id').split('-').map((x) => Number(x))
         const index = item[0]
         const value = item[1]
@@ -51,8 +55,8 @@ $('.bet-item').on({
 
         message = {
             "cmd":"quiz",
-            "quiznumber": index,
-            "answer": value
+            "quiznumber": index + '',
+            "answer": value + ''
         }
 
         console.log(message)
