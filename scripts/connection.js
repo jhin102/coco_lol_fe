@@ -47,7 +47,7 @@ window.connection_init = () => {
     function commandProcessor(cmd) {
         switch (cmd.cmd) {
             case 'msg':
-                chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg);
+                chatFrame.contentWindow.createNewMessage(cmd.name, cmd.msg, cmd.ldap);
                 break;
             case 'answer':
                 console.log("load data : ", cmd.quiznumber, cmd.answer)

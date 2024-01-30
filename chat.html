@@ -171,7 +171,7 @@
             for (message of messageList.toReversed()) {
                 html += `<div class="message">
                             <div class="user-profile" style="color: ${getMessageColor(message.profile)}">
-                                ${verifyUser(message.profile)}
+                                ${verifyUser(message.ldap)}
                                 ${message.profile}
                             </div>
                             <div class="user-message">
@@ -182,10 +182,11 @@
             chatElement.innerHTML = html;
         }
 
-        function createNewMessage(profile, message) {
+        function createNewMessage(profile, message, ldap) {
             messageList.push({
                 profile: profile,
-                message: message
+                message: message,
+                ldap: ldap
             })
             updateMessageList()
         }
